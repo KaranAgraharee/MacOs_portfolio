@@ -204,16 +204,7 @@ const navLinks = [
     },
   ];
   
-  export {
-    navLinks,
-    navIcons,
-    dockApps,
-    blogPosts,
-    techStack,
-    socials,
-    photosLinks,
-    gallery,
-  };
+
   
   const WORK_LOCATION = {
     id: 1,
@@ -505,4 +496,13 @@ const navLinks = [
   
   export { INITIAL_Z_INDEX, WINDOW_CONFIG };
 
-export {navLinks}
+  export {
+    navLinks,
+    navIcons,
+    dockApps,
+    blogPosts,
+    techStack,
+    socials,
+    photosLinks,
+    gallery,
+  };
