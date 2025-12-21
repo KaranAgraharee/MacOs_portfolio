@@ -21,7 +21,7 @@ const FONT_WEIGHTS = {
 }
 
 const setupTextHover = (container, type) => {
-    if (!container) return;
+    if (!container) return ()=>{};
 
     const letters = container.querySelectorAll("span");
     const { min, max, default: base } = FONT_WEIGHTS[type];
@@ -46,29 +46,36 @@ const setupTextHover = (container, type) => {
         })
     }
     container.addEventListener("mousemove", handleMouseMove)
+
+    return () => {
+        container.removeEventListener("mousemove", handleMouseMove);
+    };
 }
 const Welcome = () => {
     const titleRef = useRef(null)
     const subtitleRef = useRef(null)
 
     useGSAP(() => {
-        setupTextHover(titleRef.current, "titles")
-        setupTextHover(subtitleRef.current, "Subtitles")
+        const titleCleanup = setupTextHover(titleRef.current, "titles")
+        const subtitleCleanup = setupTextHover(subtitleRef.current, "Subtitles")
+
+        return () => {
+            subtitleCleanup()
+            titleCleanup()
+        }
     })
+
 
     return (
         <section id='welcome'>
-            <p ref={subtitleRef}>{renderText(
-                "Hey, I'm Karan! Welcome to my",
+            <h1 ref={titleRef} className="mt-7">
+                {renderText("Karan Agrahari", "hero-name text-[72px] leading-none font-georama text-white",400)}
+            </h1>
+            <p className='mt-2' ref={subtitleRef}>{renderText(
+                "Modern web, done right.",
                 "text-3xl font-georama",
                 100,
             )}</p>
-            <h1 ref={titleRef} className="mt-7">
-                {renderText("Portfolio", "text-9xl italic font-georama")}
-            </h1>
-            <div className="small-screen">
-                <p>This Portfolio is designed for desktop/tabled screens only.</p>
-            </div>
         </section>
     )
 }
